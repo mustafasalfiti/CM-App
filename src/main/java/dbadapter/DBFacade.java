@@ -122,7 +122,7 @@ public class DBFacade implements IKunde, IPresentation {
 
         // query data.
         try {
-            String sql = "SELECT * FROM films WHERE startTime > CURRENT_TIMESTAMP";
+            String sql = "SELECT * FROM presentation WHERE startTime > CURRENT_TIMESTAMP";
             Connection conn = DriverManager
                     .getConnection(
                             "jdbc:" + Configuration.getType() + "://" + Configuration.getServer() + ":"
@@ -162,17 +162,61 @@ public class DBFacade implements IKunde, IPresentation {
      */
     @Override
     public boolean deactivatePresentation() {
-        return false;
+        // Declare necessary SQL statement.
+        String updatePresentations = "UPDATE presentation SET isArchived = true WHERE startTime < CURRENT_TIMESTAMP";
+
+        // Update Database.
+        try (Connection connection = DriverManager
+                .getConnection(
+                        "jdbc:" + Configuration.getType() + "://" + Configuration.getServer() + ":"
+                                + Configuration.getPort() + "/" + Configuration.getDatabase() + "?serverTimezone=UTC",
+                        Configuration.getUser(), Configuration.getPassword())) {
+            try (PreparedStatement psUpdate = connection.prepareStatement(updatePresentations)) {
+                psUpdate.executeUpdate();
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     /**
-     * Archive a Presnetation
+     * Create a presentation
      * 
      * @return
      */
     @Override
     public boolean setPresentation() {
-        // TODO Auto-generated method stub
-        return false;
+        // just create a normal presentation to add in the database;
+        Presentation presentation = new Presentation();
+        presentation.setDauer(2);
+        presentation.setHall(35);
+        presentation.setId(1);
+        presentation.setStartTime(new Timestamp(System.currentTimeMillis()));
+        presentation.setEndTime(new Timestamp(System.currentTimeMillis()));
+        presentation.setIsArchived(false);
+        try {
+            String sql = "INSERT INTO presentation (id, dauer, hall, title, startTime, endTime, isArchived) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            Connection conn = DriverManager
+                    .getConnection(
+                            "jdbc:" + Configuration.getType() + "://" + Configuration.getServer() + ":"
+                                    + Configuration.getPort() + "/" + Configuration.getDatabase()
+                                    + "?serverTimezone=UTC",
+                            Configuration.getUser(), Configuration.getPassword());
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setInt(1, presentation.getId());
+            statement.setInt(2, presentation.getDauer());
+            statement.setInt(3, presentation.getHall());
+            statement.setString(4, presentation.getTitle());
+            statement.setTimestamp(5, presentation.getStartTime());
+            statement.setTimestamp(6, presentation.getEndTime());
+            statement.setBoolean(7, presentation.getIsArchived());
+            statement.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

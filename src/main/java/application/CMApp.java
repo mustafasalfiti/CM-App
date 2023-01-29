@@ -49,4 +49,10 @@ public class CMApp implements KCmds {
         }
 
     }
+
+    /**
+     * Initiates deactivating of all presentations that started.
+     */
+    public void deactivatePresentation() {
+    }
 }
