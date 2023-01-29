@@ -28,7 +28,9 @@ public class TestDBFacade {
         presentation.setTitle("X-Ray");
         presentation.setHall(35);
         presentation.setId(1);
-        presentation.setStartTime(new Timestamp(System.currentTimeMillis()));
+        // add extra time to the starttime so that we can get startTime >
+        // CURRENT_TIMESTAMP
+        presentation.setStartTime(new Timestamp(System.currentTimeMillis() + 10000000));
         presentation.setEndTime(new Timestamp(System.currentTimeMillis()));
         presentation.setIsArchived(false);
 
@@ -41,22 +43,13 @@ public class TestDBFacade {
 
     @Test
     public void testCreateUser() {
-        Boolean result = null;
-        result = DBFacade.getInstance().createUser(kundeDB);
-        assertTrue(result == true);
-        // test duplicate if false means user didn't created
-        result = DBFacade.getInstance().createUser(kundeDB);
-        assertTrue(result == false);
-
+        assertTrue(DBFacade.getInstance().createUser(kundeDB) == true);
+        assertTrue(DBFacade.getInstance().createUser(kundeDB) == false);
     }
 
     @Test
     public void getPresentations() {
-        ArrayList<Presentation> result;
-        result = DBFacade.getInstance().getPresentations();
-        result[0].getTitle();
-        assertEquals(result.size(), 1);
-
+        assertEquals(DBFacade.getInstance().getPresentations().size(), 1);
     }
 
     @AfterAll
