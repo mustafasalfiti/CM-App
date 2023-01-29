@@ -1,8 +1,11 @@
 package application;
 
-import dbadapter.*;
+import java.util.ArrayList;
 
-public class CMApp {
+import dbadapter.*;
+import interfaces.*;
+
+public class CMApp implements KCmds {
 
     private static CMApp instance;
 
@@ -16,5 +19,28 @@ public class CMApp {
             instance = new CMApp();
         }
         return instance;
+    }
+
+    /**
+     * create a user and saved in the database
+     * 
+     * @return
+     */
+    @Override
+    public Boolean register(Kunde kunde) {
+        try {
+            return DBFacade.getInstance().createUser(kunde);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
+    }
+
+    @Override
+    public ArrayList<Presentation> showPresentations() {
+        return null;
+
     }
 }

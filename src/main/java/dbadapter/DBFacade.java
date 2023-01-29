@@ -1,10 +1,12 @@
 package dbadapter;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 import interfaces.IKunde;
+import interfaces.IPresentation;
 
-public class DBFacade implements IKunde {
+public class DBFacade implements IKunde, IPresentation {
     private static DBFacade instance;
 
     private DBFacade() {
@@ -32,6 +34,12 @@ public class DBFacade implements IKunde {
         instance = dbfacade;
     }
 
+    /**
+     * create user
+     * 
+     * @return true if created false if not
+     */
+
     @Override
     public boolean createUser(Kunde kunde) {
         if (!this.isEmailUnique(kunde.getEmail())) {
@@ -40,16 +48,18 @@ public class DBFacade implements IKunde {
 
         // query data.
         try {
-            String sql = "INSERT INTO Kunde (name, password, email) VALUES (?,?,?)";
+            String sql = "INSERT INTO Kunde (name, email, password) VALUES (?,?,?)";
             Connection conn = DriverManager
                     .getConnection(
                             "jdbc:" + Configuration.getType() + "://" + Configuration.getServer() + ":"
-                                    + Configuration.getPort() + "/" + Configuration.getDatabase(),
+                                    + Configuration.getPort() + "/" + Configuration.getDatabase()
+                                    + "?serverTimezone=UTC",
                             Configuration.getUser(), Configuration.getPassword());
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, kunde.getName());
             stmt.setString(2, kunde.getEmail());
             stmt.setString(3, kunde.getPassword());
+            stmt.executeUpdate();
             return true;
 
         } catch (Exception e) {
@@ -58,15 +68,20 @@ public class DBFacade implements IKunde {
         }
     }
 
+    /**
+     * check if email is unique
+     * 
+     * @return
+     */
     @Override
     public boolean isEmailUnique(String email) {
         boolean isUnique = true;
-
         try {
             Connection conn = DriverManager
                     .getConnection(
                             "jdbc:" + Configuration.getType() + "://" + Configuration.getServer() + ":"
-                                    + Configuration.getPort() + "/" + Configuration.getDatabase(),
+                                    + Configuration.getPort() + "/" + Configuration.getDatabase()
+                                    + "?serverTimezone=UTC",
                             Configuration.getUser(), Configuration.getPassword());
             // Create a statement
             Statement stmt = conn.createStatement();
@@ -78,15 +93,58 @@ public class DBFacade implements IKunde {
             if (rs.next()) {
                 isUnique = false;
             }
-
-            // Close the resources
-            rs.close();
-            stmt.close();
-            conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
         return isUnique;
+    }
+
+    /**
+     * get required presentations
+     * 
+     * @return
+     */
+
+    @Override
+    public ArrayList<Presentation> getPresentations() {
+        ArrayList<Presentation> result = new ArrayList<Presentation>();
+
+        // query data.
+        try {
+            String sql = "SELECT * FROM films WHERE start_date > CURRENT_DATE()";
+            Connection conn = DriverManager
+                    .getConnection(
+                            "jdbc:" + Configuration.getType() + "://" + Configuration.getServer() + ":"
+                                    + Configuration.getPort() + "/" + Configuration.getDatabase()
+                                    + "?serverTimezone=UTC",
+                            Configuration.getUser(), Configuration.getPassword());
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            
+            ResultSet rs = stmt.executeQuery();
+            while( rs.next()) {
+                rs.
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+     * Archive a Presnetation
+     * 
+     * @return
+     */
+    @Override
+    public boolean deactivatePresentation() {
+        return false;
+    }
+
+    @Override
+    public boolean setPresentation() {
+        // TODO Auto-generated method stub
+        return false;
     }
 }

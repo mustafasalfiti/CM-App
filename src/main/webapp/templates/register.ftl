@@ -140,10 +140,11 @@ input::-moz-focus-inner {
 
 </style>
 <body>
+<#if done == false>
 <div class="page">
   <div class="container">
     <div class="left">
-      <div class="login">Register</div>
+      <div class="login">Sucessful</div>
       <div class="eula">When you register you will be able to book tickets for your best show!</div>
     </div>
     <div class="right">
@@ -159,5 +160,21 @@ input::-moz-focus-inner {
     </div>
   </div>
 </div>
+<#else>
+    <div class="page">
+      <div class="container">
+        <div style="width: 100%" class="left">
+          <div class="login" ">Register</div>
+          <div class="eula">
+            <p>
+              You have been successfully Registered now you can book the shows
+              you want!
+              <a style="color: #ff6708;" id="submit" href="/porject">Welcome Page</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+</#if>
 </body>
 </html>
