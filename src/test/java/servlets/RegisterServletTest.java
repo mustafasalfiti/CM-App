@@ -15,6 +15,8 @@ public class RegisterServletTest {
     @BeforeAll
     public static void prepare() {
         tester = new WebTester();
+        // tester.setBaseUrl("http://localhost:8080/project/register");
+
     }
 
     @Test

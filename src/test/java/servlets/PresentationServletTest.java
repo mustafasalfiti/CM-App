@@ -16,6 +16,7 @@ public class PresentationServletTest {
     @BeforeAll
     public static void prepare() {
         tester = new WebTester();
+        // tester.setBaseUrl("http://localhost:8080/project/presentation");
 
     }
 
