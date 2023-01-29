@@ -40,7 +40,13 @@ public class CMApp implements KCmds {
 
     @Override
     public ArrayList<Presentation> showPresentations() {
-        return null;
+        try {
+            return DBFacade.getInstance().getPresentations();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<Presentation>();
+        }
 
     }
 }

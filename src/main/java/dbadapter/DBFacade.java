@@ -103,7 +103,7 @@ public class DBFacade implements IKunde, IPresentation {
     /**
      * get required presentations
      * 
-     * @return
+     * @return a list of presentation
      */
 
     @Override
