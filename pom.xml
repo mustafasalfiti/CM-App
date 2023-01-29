@@ -36,7 +36,12 @@
       <version>4.11</version>
       <scope>test</scope>
     </dependency>
-
+    <dependency>
+      <groupId>jwebunit</groupId>
+      <artifactId>jwebunit</artifactId>
+      <version>1.2</version>
+      <scope>test</scope>
+    </dependency>
     <dependency>
       <groupId>org.freemarker</groupId>
       <artifactId>freemarker</artifactId>
@@ -107,7 +112,7 @@
         </includes>
       </resource>
       <resource>
-        <directory>src/test</directory>
+        <directory>src/test/java</directory>
         <includes>
           <include>*.java</include>
           <include>*.java</include>

@@ -3,8 +3,6 @@ package dbadapter;
 // used jupiter api to test this is why there is no need to use TestCase
 import org.junit.jupiter.api.Test;
 
-import freemarker.ext.beans.TemplateAccessible;
-
 import java.sql.*;
 
 import static org.junit.Assert.assertTrue;
@@ -12,7 +10,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.sql.Connection;
 import java.sql.Statement;
-import java.util.ArrayList;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -23,27 +20,29 @@ public class TestDBFacade {
 
     @BeforeAll
     public static void setUp() {
-        Presentation presentation = new Presentation();
-        presentation.setDauer(2);
-        presentation.setTitle("X-Ray");
-        presentation.setHall(35);
-        presentation.setId(1);
+        preDB = new Presentation();
+        preDB.setDauer(2);
+        preDB.setTitle("X-Ray");
+        preDB.setHall(35);
+        preDB.setId(1);
         // add extra time to the starttime so that we can get startTime >
         // CURRENT_TIMESTAMP
-        presentation.setStartTime(new Timestamp(System.currentTimeMillis() + 10000000));
-        presentation.setEndTime(new Timestamp(System.currentTimeMillis()));
-        presentation.setIsArchived(false);
+        preDB.setStartTime(new Timestamp(System.currentTimeMillis() + 10000000));
+        preDB.setEndTime(new Timestamp(System.currentTimeMillis()));
+        preDB.setIsArchived(false);
 
         kundeDB = new Kunde("Mustafa", "Mustafa@email", "Password");
 
-        // create a new presentation in databank for test purposes
-        DBFacade.getInstance().setPresentation(presentation);
+        // create a new Presentation in databank for test purposes
+        DBFacade.getInstance().setPresentation(preDB);
 
     }
 
     @Test
     public void testCreateUser() {
+        // check if create user works
         assertTrue(DBFacade.getInstance().createUser(kundeDB) == true);
+        // check if we can sign in with the same email again
         assertTrue(DBFacade.getInstance().createUser(kundeDB) == false);
     }
 
@@ -71,7 +70,8 @@ public class TestDBFacade {
             Statement stmt = conn.createStatement();
             int result = stmt.executeUpdate(sql);
             int result1 = stmt.executeUpdate(sql1);
-            System.out.println("Number of rows deleted: " + result);
+            System.out.println("Number of rows deleted in Kunde: " + result);
+            System.out.println("Number of rows deleted: in Presentation" + result1);
 
         } catch (Exception e) {
             e.printStackTrace();
