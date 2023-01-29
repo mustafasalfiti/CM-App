@@ -7,9 +7,9 @@ public class Presentation {
     private int id;
     private int dauer;
     private int hall;
-    private String titel;
-    private Timestamp start_time;
-    private Timestamp end_time;
+    private String title;
+    private Timestamp startTime;
+    private Timestamp endTime;
     private Boolean isArchived;
 
     public Boolean getIsArchived() {
@@ -44,12 +44,12 @@ public class Presentation {
         this.hall = hall;
     }
 
-    public String getTitel() {
-        return this.titel;
+    public String getTitle() {
+        return this.title;
     }
 
-    public void setTitel(String titel) {
-        this.titel = titel;
+    public void setTitle(String titel) {
+        this.title = titel;
     }
 
     public Timestamp getStartTime() {

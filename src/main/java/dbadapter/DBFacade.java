@@ -112,7 +112,7 @@ public class DBFacade implements IKunde, IPresentation {
 
         // query data.
         try {
-            String sql = "SELECT * FROM films WHERE start_date > CURRENT_DATE()";
+            String sql = "SELECT * FROM films WHERE startTime > CURRENT_DATE()";
             Connection conn = DriverManager
                     .getConnection(
                             "jdbc:" + Configuration.getType() + "://" + Configuration.getServer() + ":"
@@ -120,15 +120,28 @@ public class DBFacade implements IKunde, IPresentation {
                                     + "?serverTimezone=UTC",
                             Configuration.getUser(), Configuration.getPassword());
             PreparedStatement stmt = conn.prepareStatement(sql);
-            
+
             ResultSet rs = stmt.executeQuery();
-            while( rs.next()) {
-                rs.
+            while (rs.next()) {
+                // don't show archived presentation
+                if (rs.getBoolean("isArchived") == false) {
+                    Presentation presentation = new Presentation();
+                    presentation.setDauer(rs.getInt("dauer"));
+                    presentation.setHall(rs.getInt("hall"));
+                    presentation.setId(rs.getInt("id"));
+                    presentation.setStartTime(rs.getTimestamp("starttime"));
+                    presentation.setEndTime(rs.getTimestamp("endtime"));
+                    presentation.setIsArchived(false);
+                    result.add(presentation);
+
+                }
+
             }
+            return result;
 
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
+            return result;
         }
     }
 
