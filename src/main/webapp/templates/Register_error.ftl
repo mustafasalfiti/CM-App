@@ -139,23 +139,17 @@
   <body>
     <div class="page">
       <div class="container">
-        <div class="left">
-          <div class="login">Register</div>
+        <div style="width: 100%" class="left">
+          <div class="login" style="color: #c1121f">Failed</div>
           <div class="eula">
-            When you register you will be able to book tickets for your best
-            show!
+            <p>
+              Your Email is already registered please try a different Email
+              address
+              <a style="color: #ff6708" id="submit" href="/project"
+                >Welcome Page</a
+              >
+            </p>
           </div>
-        </div>
-        <div class="right">
-          <form class="form" method="POST">
-            <label for="email">Name</label>
-            <input name="name" type="text" id="name" required />
-            <label for="email">Email</label>
-            <input name="email" type="email" id="email" required />
-            <label for="password">Password</label>
-            <input name="password" type="password" id="password" required />
-            <input type="submit" id="submit" value="Submit" />
-          </form>
         </div>
       </div>
     </div>

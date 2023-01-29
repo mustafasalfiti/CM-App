@@ -7,6 +7,6 @@ public class Timer {
         CMApp cmApp = new CMApp();
         cmApp.deactivatePresentation();
         System.out
-                .println("All Started Presentation are archived");
+                .println("All Started Presentations are archived");
     }
 }

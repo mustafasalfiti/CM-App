@@ -187,15 +187,7 @@ public class DBFacade implements IKunde, IPresentation {
      * @return
      */
     @Override
-    public boolean setPresentation() {
-        // just create a normal presentation to add in the database;
-        Presentation presentation = new Presentation();
-        presentation.setDauer(2);
-        presentation.setHall(35);
-        presentation.setId(1);
-        presentation.setStartTime(new Timestamp(System.currentTimeMillis()));
-        presentation.setEndTime(new Timestamp(System.currentTimeMillis()));
-        presentation.setIsArchived(false);
+    public boolean setPresentation(Presentation presentation) {
         try {
             String sql = "INSERT INTO presentation (id, dauer, hall, title, startTime, endTime, isArchived) VALUES (?, ?, ?, ?, ?, ?, ?)";
             Connection conn = DriverManager

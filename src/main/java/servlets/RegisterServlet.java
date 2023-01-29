@@ -11,8 +11,7 @@ public class RegisterServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse res) {
         try {
             System.out.println("DONE");
-            req.setAttribute("done", false);
-            req.getRequestDispatcher("/templates/welcome.ftl").forward(req, res);
+            req.getRequestDispatcher("/templates/register.ftl").forward(req, res);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -29,10 +28,11 @@ public class RegisterServlet extends HttpServlet {
 
             if (result == true) {
                 req.setAttribute("done", true);
-                req.getRequestDispatcher("/templates/register.ftl").forward(req, res);
+                req.getRequestDispatcher("/templates/Register_success.ftl").forward(req, res);
 
             } else {
-                System.out.println("Something went wrong");
+                req.getRequestDispatcher("/templates/Register_error.ftl").forward(req, res);
+
             }
 
             // not yet implemented
