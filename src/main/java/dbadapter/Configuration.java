@@ -7,7 +7,7 @@ public class Configuration {
     private static final int PORT = 3306;
     private static final String DATABASE = "swt";
     private static final String USER = "root";
-    private static final String PASSWORD = "root";
+    private static final String PASSWORD = "";
 
     public static String getServer() {
         return SERVER;

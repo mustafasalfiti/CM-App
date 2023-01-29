@@ -12,6 +12,20 @@ public class Presentation {
     private Timestamp endTime;
     private Boolean isArchived;
 
+    public Presentation(int id, int dauer, int hall, String title, Timestamp startTime, Timestamp endTime,
+            Boolean isArchived) {
+        this.id = id;
+        this.dauer = dauer;
+        this.hall = hall;
+        this.title = title;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.isArchived = isArchived;
+    }
+
+    public Presentation() {
+    }
+
     public Boolean getIsArchived() {
         return isArchived;
     }

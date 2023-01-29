@@ -6,9 +6,18 @@ import java.util.ArrayList;
 import interfaces.IKunde;
 import interfaces.IPresentation;
 
+/**
+ * Class which acts as the connector between application and database. Creates
+ * Java objects from SQL returns. Exceptions thrown in this class will be
+ * catched with a 500 error page.
+ * 
+ */
 public class DBFacade implements IKunde, IPresentation {
     private static DBFacade instance;
 
+    /**
+     * Constructor which loads the corresponding driver for the chosen database type
+     */
     private DBFacade() {
         try {
             Class.forName("com." + Configuration.getType() + ".jdbc.Driver");
@@ -37,6 +46,7 @@ public class DBFacade implements IKunde, IPresentation {
     /**
      * create user
      * 
+     * @param Kunde create a user with these credentials
      * @return true if created false if not
      */
 
@@ -112,7 +122,7 @@ public class DBFacade implements IKunde, IPresentation {
 
         // query data.
         try {
-            String sql = "SELECT * FROM films WHERE startTime > CURRENT_DATE()";
+            String sql = "SELECT * FROM films WHERE startTime > CURRENT_TIMESTAMP";
             Connection conn = DriverManager
                     .getConnection(
                             "jdbc:" + Configuration.getType() + "://" + Configuration.getServer() + ":"
@@ -155,6 +165,11 @@ public class DBFacade implements IKunde, IPresentation {
         return false;
     }
 
+    /**
+     * Archive a Presnetation
+     * 
+     * @return
+     */
     @Override
     public boolean setPresentation() {
         // TODO Auto-generated method stub

@@ -36,13 +36,19 @@
       <version>4.11</version>
       <scope>test</scope>
     </dependency>
+
     <dependency>
       <groupId>org.freemarker</groupId>
       <artifactId>freemarker</artifactId>
       <version>2.3.32</version>
     </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <version>5.9.1</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
-
   <build>
     <finalName>project</finalName>
     <pluginManagement>      <!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
@@ -98,6 +104,14 @@
           <include>*.class</include>
           <include>*.class</include>
           <include>**/*.class</include>
+        </includes>
+      </resource>
+      <resource>
+        <directory>src/test</directory>
+        <includes>
+          <include>*.java</include>
+          <include>*.java</include>
+          <include>**/*.java</include>
         </includes>
       </resource>
     </resources>
